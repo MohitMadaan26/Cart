@@ -41,7 +41,7 @@ class CartItem extends React.Component{
             <div className="cart-item">
 
                 <div className="left-block">
-                    <img alt="Product Image" style={style.image}></img>
+                    <img style={style.image}></img>
                 </div>
 
                 <div className="right-block">
@@ -54,7 +54,7 @@ class CartItem extends React.Component{
                        src= {PlusImage} 
                        onClick= {this.increaseQuantity}
                        />
-                       <img alt="increase" className="action-icons" src= {MinusImage} />
+                       <img alt="decrease" className="action-icons" src= {MinusImage} />
                        <img alt="delete" className="action-icons" src= {DeleteImage} />
                     </div>
                 </div>
