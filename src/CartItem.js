@@ -7,16 +7,6 @@ const DeleteImage = require('./image/delete.png');
 
 class CartItem extends React.Component{
 
-    constructor (){
-        super();
-        this.state = {
-            price : 999,
-            title : 'Mobile Phone',
-            qty : 1,
-            img : ''
-        }
-    }
-
     increaseQuantity = () => {
         
         // setState method one !
@@ -34,9 +24,28 @@ class CartItem extends React.Component{
         });
     }
 
+    decreaseQuantity = () => {
+
+        var quantity = this.state.qty;
+
+        if(quantity === 0){
+            return;
+        }
+
+        this.setState((prevState) => {
+            return {
+                qty : prevState.qty - 1
+            }
+        });
+        
+
+    }
+
     render(){
 
-        const {price, qty, title} = this.state;
+        const {price, qty, title} = this.props.product;
+
+        const{onDecreaseQuantity, product, onDeleteItem} = this.props;
         return(
             <div className="cart-item">
 
@@ -52,10 +61,18 @@ class CartItem extends React.Component{
                        <img alt="increase" 
                        className="action-icons" 
                        src= {PlusImage} 
-                       onClick= {this.increaseQuantity}
+                       onClick= {() => this.props.onIncreaseQuantity(this.props.product)}
                        />
-                       <img alt="decrease" className="action-icons" src= {MinusImage} />
-                       <img alt="delete" className="action-icons" src= {DeleteImage} />
+                       <img alt="decrease" 
+                       className="action-icons" 
+                       src= {MinusImage}
+                       onClick={() => onDecreaseQuantity(product)}
+                       />
+                       <img alt="delete" 
+                       className="action-icons" 
+                       src= {DeleteImage} 
+                       onClick={() => onDeleteItem(product.id)}
+                       />
                     </div>
                 </div>
 
