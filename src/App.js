@@ -3,6 +3,8 @@ import CartItem from './CartItem'
 import Cart from './Cart';
 import { render } from '@testing-library/react';
 import Navbar from './NavBar';
+import firebase from "firebase/app";
+
 
 
 
@@ -12,30 +14,18 @@ class App extends React.Component {
   constructor (){
     super();
     this.state = {
-        products : [
-            {
-             price : 99,
-             title : 'Watch',
-             qty : 1,
-             img : 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0Y2h8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=1000&q=60',
-             id : 1
-            },
-             {
-                price : 999,
-                title : 'Mobile',
-                qty : 10,
-             img : 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9iaWxlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=1000&q=60://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9iaWxlJTIwcGhvbmV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=1000&q=60',
-                id : 2,         
-             },
-             {
-                price : 99,
-                title : 'Laptop',
-                qty : 4,
-                img : 'https://images.unsplash.com/photo-1575024357670-2b5164f470c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1000&q=60',
-                id : 3
-             },
-        ]
+        products : []
     }
+}
+
+componentDidMount(){
+  firebase
+    .firestore()
+    .collection('products')
+    .get()
+    .then((snapshot) => {
+      console.log(snapshot);
+    })
 }
 
 handleDeleteItem = (id) =>{
@@ -95,7 +85,7 @@ getCartCount = (product) =>{
   return count;
 }
 
-getCartTotal = (product) =>{
+getCartTotal = (product) =>{ 
 
   const {products} = this.state;
 
